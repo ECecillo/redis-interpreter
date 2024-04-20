@@ -26,11 +26,9 @@ const (
 	INT    = "INT"   // 1343456
 	FLOAT  = "FLOAT"
 	STRING = "STRING"
+	CRLF   = "CRLF"
 
 	// Operators
-	CRLF      = "\r\n"
-	CR        = "\r"
-	LF        = "\n"
 	PLUS      = "+"
 	MINUS     = "-"
 	COLON     = ":"

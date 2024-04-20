@@ -68,9 +68,13 @@ func (l *Lexer) NextToken() token.Token {
 		tok = newToken(token.TILDE, l.ch)
 	case '>':
 		tok = newToken(token.GT, l.ch)
-	case 0:
-		tok.Literal = ""
-		tok.Type = token.EOF
+	case '\r':
+		if l.peekChar() == '\n' {
+			l.readChar()
+			tok = token.Token{Type: token.CRLF, Literal: "\r\n"}
+		} else {
+			tok = newToken(token.ILLEGAL, l.ch)
+		}
 	case '\\':
 		if l.peekChar() == 'r' {
 			l.readChar()
@@ -78,13 +82,16 @@ func (l *Lexer) NextToken() token.Token {
 				l.readChar()
 				if l.peekChar() == 'n' {
 					l.readChar()
-					tok = token.Token{Type: token.CRLF, Literal: "\r\n"}
-					l.readChar()
+					tok = token.Token{Type: token.CRLF, Literal: "\\r\\n"}
 					return tok
 				}
 			}
 		}
-	default: // Check for identifiers
+	case 0:
+		tok.Literal = ""
+		tok.Type = token.EOF
+
+	default:
 		if isLetter(l.ch) {
 			tok.Literal = l.readIdentifier()
 			tok.Type = token.LookupIdent(tok.Literal)

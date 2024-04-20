@@ -28,7 +28,7 @@ func checkToken(input string, tests []TokenOutputExpected, t *testing.T) {
 }
 
 func TestOperators(t *testing.T) {
-	input := `+-:$*_#,(!=%~>`
+	input := "+-:$*_#,(!=%~>"
 
 	tests := []TokenOutputExpected{
 		{token.PLUS, "+"},
@@ -51,7 +51,7 @@ func TestOperators(t *testing.T) {
 }
 
 func TestSkipCRLF(t *testing.T) {
-	input := `\r\n+\r\n`
+	input := "\r\n+\r\n"
 
 	tests := []TokenOutputExpected{
 		{token.CRLF, "\r\n"},
@@ -62,7 +62,7 @@ func TestSkipCRLF(t *testing.T) {
 }
 
 func TestPing(t *testing.T) {
-	input := `*1\r\n$4\r\nping\r\n`
+	input := "*1\r\n$4\r\nping\r\n"
 
 	tests := []TokenOutputExpected{
 		{token.ASTERISK, "*"},
